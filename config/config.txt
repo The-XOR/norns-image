@@ -1,0 +1,37 @@
+# For more options and information see
+# http://rpf.io/configtxt
+# Some settings may impact device functionality. See link above for details
+
+# uncomment if you get no picture on HDMI for a default "safe" mode
+#hdmi_safe=1
+
+# uncomment this if your display has a black border of unused pixels visible
+# and your display can output without overscan
+disable_overscan=1
+
+
+#uncomment to overclock the arm. 700 MHz is the default.
+#arm_freq=800
+
+# Uncomment some or all of these to enable the optional hardware interfaces
+dtparam=i2c_arm=on
+dtparam=i2s=on
+dtparam=spi=on
+dtoverlay=adafruit18,reset_pin=6,dc_pin=5,rotate=270
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=off
+
+# Buttons and encoders
+dtoverlay=norns-buttons-encoders
+dtparam=e1_pin_a=4
+dtparam=e1_pin_b=27
+dtparam=e2_pin_a=12
+dtparam=e2_pin_b=25
+dtparam=e3_pin_a=24
+dtparam=e3_pin_b=23
+dtparam=b1_pin=22
+dtparam=b2_pin=26
+dtparam=b3_pin=13
+
+enable_uart=1

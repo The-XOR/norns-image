@@ -1,29 +1,21 @@
+
+# MODIFICARE QUESTO FILE e mettere il numero di scheda audio voluta
+sudo cp --remove-destination config/asound.conf /etc/asound.conf
+
+# supporto per i tasti fisici (col cazzo che era documentata)
+sudo dtc -W no-unit_address_vs_reg -@ -I dts -O dtb -o /boot/overlays/norns-buttons-encoders.dtbo config/norns-buttons-encoders-overlay.dts
+
+sudo cp --remove-destination config/cmdline.txt /boot/cmdline.txt
+sudo cp --remove-destination config/config.txt /boot/config.txt
+
 # monome package apt
 sudo cp config/norns.list /etc/apt/sources.list.d/
-
-# hold packages we don't want to update
-echo "raspberrypi-kernel hold" | sudo dpkg --set-selections
 
 # uninstall packages we don't need
 sudo apt purge libraspberrypi-doc
 
-# install specific version of Raspberry firmware and userland tools
-RPI_FIRMWARE_VERSION="1.20190401-1"
-RPI_FIRMWARE_PACKAGES=( raspberrypi-bootloader libraspberrypi0 libraspberrypi-dev libraspberrypi-bin )
-
-for PACKAGE in "${RPI_FIRMWARE_PACKAGES[@]}"
-do
-  wget --quiet "https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/${PACKAGE}_${RPI_FIRMWARE_VERSION}_armhf.deb"
-  sudo dpkg -i ${PACKAGE}_${RPI_FIRMWARE_VERSION}_armhf.deb
-  echo "${PACKAGE} hold" | sudo dpkg --set-selections
-  rm ${PACKAGE}_${RPI_FIRMWARE_VERSION}_armhf.deb
-done
-
 # uninstall old network packages
 sudo apt purge hostapd
-
-# install needed packages
-#sudo apt install network-manager dnsmasq-base midisport-firmware
 
 # systemd
 sudo mkdir -p /etc/systemd/system.conf.d
