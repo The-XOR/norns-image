@@ -41,6 +41,9 @@ sudo apt-get install libevdev-dev liblo-dev libudev-dev libcairo2-dev liblua5.3-
 
 sudo apt-get install network-manager
 
+sudo apt-get install luarocks liblua5.1-dev
+sudo luarocks install ldoc
+
 sudo apt-get install mc (non un prerequisito, ma come non averlo?)
 
 curl https://keybase.io/artfwo/pgp_keys.asc | sudo apt-key add -
@@ -94,11 +97,23 @@ Uscire con Ctrl+D
 cd sc
 ./install.sh
 
+crea documentazizone
+cd ~/norns
+ldoc .
+
 cd ~/norns-image
 ./setup.sh
 
 lanciare alsamixer
 Selezionare la scheda audio che si intende utilizzare e settarla alla stecca della manetta
+
+--- Installazione maiden:
+- scaricare ultima versione di maiden da https://github.com/monome/maiden/releases.
+va installato in ~/
+per es. wget https://github.com/monome/maiden/releases/download/v1.1.2/maiden-v1.1.2.tgz
+tar -xzvf maiden-v1.1.2.tgz
+rm maiden-v1.1.2.tgz
+
 
 reboot, norns should boot up.
 

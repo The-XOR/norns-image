@@ -66,6 +66,10 @@ sudo systemctl unmask plymouth-quit.service
 sudo systemctl unmask plymouth-quit-wait.service
 sudo apt purge plymouth -y
 
+sudo systemctl stop dhcpcd5
+sudo systemctl disable dhcpcd5
+sudo apt purge dhcpcd5 -y
+
 # Apt timers
 sudo systemctl mask apt-daily.timer
 sudo systemctl mask apt-daily-upgrade.timer
@@ -87,5 +91,6 @@ sudo apt purge exim4-* nfs-common triggerhappy -y
 sudo systemctl mask raspi-config.service
 
 sudo apt --purge -y autoremove
+sudo systemctl daemon-reload
 
 mv ./dust ~/
