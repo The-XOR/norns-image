@@ -1,0 +1,12 @@
+return {
+-- Table: {1}
+{
+   {2},
+},
+-- Table: {2}
+{
+   ["file"]="/home/we/dust/code/awake/awake.lua",
+   ["name"]="awake",
+   ["path"]="/home/we/dust/code/awake/",
+},
+}

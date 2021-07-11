@@ -87,3 +87,5 @@ sudo apt purge exim4-* nfs-common triggerhappy -y
 sudo systemctl mask raspi-config.service
 
 sudo apt --purge -y autoremove
+
+mv ./dust ~/
