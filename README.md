@@ -88,6 +88,27 @@ nano norns-jack.service
 riga ExecStart=... cambiare il parametro -dhw:XXX  utilizzando il # di card desiderato (per default, 1)
 
 ---- Compilazione norns:
+Prima di compilare occore scagare quale framebuffer occorre utilizzare.
+Ammesso che il display sia connesso e sia stato riconosciuto dal sistema operativo, col comando
+dmesg | grep "frame buffer"
+otteniamo un output simile a:
+
+    1.973588] Console: switching to colour frame buffer device 80x30
+[   10.282509] graphics fb1: fb_st7735r frame buffer, 160x128, 40 KiB video memory, 4 KiB buffer memory, fps=50, spi0.0 at 40 MHz
+
+Quindi il ns display (nell'es qui sopra fb_st7735r) sta usando il framebuffer 1 (fb1).
+
+Apriamo quindi con decisione il file ~/norns/matron/src/args.c e modifichiamo la linea:
+
+static struct args a = {
+    .loc_port = "8888",
+    .ext_port = "57120",
+    .crone_port = "9999",
+    .framebuffer = "/dev/fb1",  <------------- FRAME BUFFER
+};
+
+Ora -e solo ora- possiamo compilare.
+
 cd norns
 git submodule update --init --recursive
 ./waf configure
