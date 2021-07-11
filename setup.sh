@@ -12,17 +12,16 @@ sudo cp --remove-destination config/config.txt /boot/config.txt
 sudo cp config/norns.list /etc/apt/sources.list.d/
 
 # uninstall packages we don't need
-sudo apt purge libraspberrypi-doc
+sudo apt purge libraspberrypi-doc -y
 
 # uninstall old network packages
-sudo apt purge hostapd
+sudo apt purge hostapd -y
 
 # systemd
 sudo mkdir -p /etc/systemd/system.conf.d
 sudo cp --remove-destination config/10-default-env-vars.conf /etc/systemd/system.conf.d/10-default-env-vars.conf
 sudo cp --remove-destination config/norns-crone.service /etc/systemd/system/norns-crone.service
 sudo rm /etc/systemd/system/norns-supernova.service
-#sudo cp --remove-destination config/norns-supernova.service /etc/systemd/system/norns-supernova.service
 sudo cp --remove-destination config/norns-sclang.service /etc/systemd/system/norns-sclang.service
 sudo cp --remove-destination config/norns-jack.service /etc/systemd/system/norns-jack.service
 sudo cp --remove-destination config/norns-maiden.service /etc/systemd/system/norns-maiden.service
@@ -65,7 +64,7 @@ sudo systemctl unmask plymouth-read-write.service
 sudo systemctl unmask plymouth-start.service
 sudo systemctl unmask plymouth-quit.service
 sudo systemctl unmask plymouth-quit-wait.service
-sudo apt purge plymouth
+sudo apt purge plymouth -y
 
 # Apt timers
 sudo systemctl mask apt-daily.timer
@@ -76,12 +75,12 @@ sudo systemctl mask alsa-restore.service
 sudo systemctl mask alsa-state.service
 
 # disable swap
-sudo apt purge dphys-swapfile
+sudo apt purge dphys-swapfile -y
 sudo swapoff -a
 sudo rm /var/swap
 
 # speed up boot
-sudo apt purge exim4-* nfs-common triggerhappy
+sudo apt purge exim4-* nfs-common triggerhappy -y
 
 # ensure we don't override kernel option for 'ondemand' frequency
 # governor
