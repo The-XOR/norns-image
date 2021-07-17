@@ -1,21 +1,40 @@
 /*
- * Device Tree overlay for Adafruit 1.8" TFT LCD with ST7735R chip 160x128
+ * Device Tree overlay for Waveshare 2.8 display
  */
 
 /dts-v1/;
 /plugin/;
 
 / {
-	compatible = "brcm,bcm2835";
+	compatible = "brcm,bcm2835", "brcm,bcm2708", "brcm,bcm2709";
 
 	fragment@0 {
-		target = <&spidev0>;
-		__overlay__ {
-			status = "disabled";
-		};
-	};
+                target = <&spi0>;
+                __overlay__ {
+                        status = "okay";
 
-	fragment@1 {
+                        spidev@0{
+                                status = "disabled";
+                        };
+
+                        spidev@1{
+                                status = "disabled";
+                        };
+                };
+        };
+
+	 fragment@1 {
+                target = <&gpio>;
+                __overlay__ {
+                        pitft_pins: pitft_pins {
+                                brcm,pins = <25>;
+                                brcm,function = <1>; /* out */
+                                brcm,pull = <0>; /* none */
+                        };
+                };
+        };
+
+	fragment@2 {
 		target = <&spi0>;
 		__overlay__ {
 			/* needed to avoid dtc warning */
@@ -24,19 +43,41 @@
 			status = "okay";
 
 			n28: norns28@0 {
-				compatible = "fbtft,adafruit18";
+				compatible = "sitronix,st7789v";
 				reg = <0>;
 				pinctrl-names = "default";
-				spi-max-frequency = <40000000>;
-				rotate = <90>;
+				spi-max-frequency = <96000000>;
+				custom = <1>;
+				bgr = <0>;
+				rotate = <0>;
 				buswidth = <8>;
-				fps = <50>;
-				height = <240>;
-				width = <320>;
+				fps = <60>;
+				height = <320>;
+				width = <240>;
 				reset-gpios = <&gpio 25 1>;
 				dc-gpios = <&gpio 24 0>;
 				led-gpios = <&gpio 18 0>;
 				debug = <0>;
+
+				init = <0x1000011
+					0x20000ff
+					0x1000036 0xA0
+					0x100003a 0x05
+					0x1000021 
+					0x100002a 0x00 0x01 0x00 0x3f
+					0x100002b 0x00 0x00 0x00 0xef
+					0x10000b2 0x0c 0x0c 0x00 0x33 0x33
+					0x10000b7 0x35
+					0x10000bb 0x1f
+					0x10000c0 0x2c
+					0x10000c2 0x01
+					0x10000c3 0x12
+					0x10000c4 0x20
+					0x10000c6 0x0f
+					0x10000d0 0xa4 0xa1
+					0x10000e0 0xd0 0x08 0x11 0x08 0x0C 0x15 0x39 0x33 0x50 0x36 0x13 0x14 0x29 0x2d
+					0x10000e1 0xd0 0x08 0x10 0x08 0x06 0x06 0x39 0x44 0x51 0x0b 0x16 0x14 0x2f 0x31
+					0x1000029>;
 			};
 		};
 	};
@@ -45,7 +86,6 @@
 		speed     = <&n28>,"spi-max-frequency:0";
 		rotate    = <&n28>,"rotate:0";
 		fps       = <&n28>,"fps:0";
-		bgr       = <&n28>,"bgr?";
 		debug     = <&n28>,"debug:0";
 		dc_pin    = <&n28>,"dc-gpios:4";
 		reset_pin = <&n28>,"reset-gpios:4";
