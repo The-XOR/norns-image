@@ -1,4 +1,6 @@
-console=tty1 fbcon=map:0 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait 
+console=tty1 fbcon=map:1 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait 
+# raspberry pi 3:
+# console=tty1 fbcon=map:0 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait 
 
 
 
