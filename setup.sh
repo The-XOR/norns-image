@@ -98,4 +98,5 @@ sudo systemctl mask raspi-config.service
 sudo apt --purge -y autoremove
 sudo systemctl daemon-reload
 
-mv ./dust ~/
+tar -xzvf dust.tar.gz -C ~/ 
+mv --force ~/norns-image/we ~/dust

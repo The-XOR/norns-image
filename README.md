@@ -98,6 +98,8 @@ annotarsi il n. di card della scheda che si vuole utilizzare
 
 git clone https://github.com/The-XOR/norns.git --depth=1
 git clone https://github.com/The-XOR/norns-image.git --depth=1
+cd norns-image
+git submodule init
 cd norns-image/config
 nano asound.conf
 inserire qui il numero di card annotato in precedenza (per default, 1)
