@@ -37,7 +37,8 @@ disable need for passwd with sudo:
 
 * Installare i prerequisiti:
 
-sudo apt-get install libevdev-dev liblo-dev libudev-dev libcairo2-dev liblua5.3-dev libavahi-compat-libdnssd-dev libasound2-dev libncurses5-dev libncursesw5-dev libsndfile1-dev
+sudo apt-get install libevdev-dev liblo-dev libudev-dev libcairo2-dev liblua5.3-dev libavahi-compat-libdnssd-dev
+sudo apt-get install libasound2-dev libncurses5-dev libncursesw5-dev libsndfile1-dev
 
 sudo apt-get install network-manager
 
@@ -48,7 +49,7 @@ sudo apt-get install mc (non un prerequisito, ma come non averlo?)
 
 curl https://keybase.io/artfwo/pgp_keys.asc | sudo apt-key add -
 
---- OCIO: LA PROSSIMA LINEA E' PER 'BUSTER', MA NEL CSO FOSSE AGGIORNATO RASPIOS AD UNA FUTURA VERSIONE AGGIORNARE DI CONSEGUENZA
+--- OCIO: LA PROSSIMA LINEA E' PER 'BUSTER', MA NEL CASO FOSSE AGGIORNATO RASPIOS AD UNA FUTURA VERSIONE AGGIORNARE DI CONSEGUENZA
 echo "deb https://package.monome.org/ buster main" | sudo tee /etc/apt/sources.list.d/norns.list
 
 sudo apt update
@@ -63,6 +64,26 @@ sudo nano /boot/config.txt
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=off  <-----------  impostare ad OFF l'audio interno del raspoberro
 reboot!!!!!
+
+A cus punt, la wifi **POTREBBE** non funzionare piu' a causa del network manager. La cura dovrebbe essere:
+
+I. Editare il file /etc/NetworkManager/NetworkManager.conf come segue:
+[main]
+plugins=ifupdown,keyfile
+dhcp=internal
+
+
+[ifupdown]
+managed=true
+
+II. sudo systemctl disable dhcpcd
+    sudo systemctl stop dhcpcd
+
+III. reboot
+
+IV. nmcli device wifi con "Nome rete wifi" password "password rete wifi"
+
+*****************************************
 
 Inserire nello slotto usbo la sound card che si intende  utilizzare (per es la cara vecchia barbonger uca222)
 aplay -l
@@ -88,7 +109,7 @@ nano norns-jack.service
 riga ExecStart=... cambiare il parametro -dhw:XXX  utilizzando il # di card desiderato (per default, 1)
 
 ---- Compilazione norns:
-Prima di compilare occore scagare quale framebuffer occorre utilizzare.
+Prima di compilare occore svagare quale framebuffer occorre utilizzare.
 Ammesso che il display sia connesso e sia stato riconosciuto dal sistema operativo, col comando
 dmesg | grep "frame buffer"
 otteniamo un output simile a:
@@ -104,7 +125,7 @@ static struct args a = {
     .loc_port = "8888",
     .ext_port = "57120",
     .crone_port = "9999",
-    .framebuffer = "/dev/fb1",  <------------- FRAME BUFFER
+    .framebuffer = "/dev/fb0",  <------------- FRAME BUFFER
 };
 
 Ora -e solo ora- possiamo compilare.
@@ -113,7 +134,15 @@ cd norns
 git submodule update --init --recursive
 ./waf configure
 ./waf
-sclang [bisogna lanciare almeno la prima volta supercollider, oppure crearsi il folder a mano]
+
+Eseguire ./sclang.sh per controllare che supercollider si avvii correttamente.
+Dopo lunghe peripezie, la linea di comando originale NON funzionava dopo le ultime modifiche. Ho visto che si poteva
+avviare aggiungendo la variabile QT_QPA_PLATFORM prima di eseguire il comando, ma comunque SuperCollider e' sempre
+un punto di domanda ed un domani potrebbe di nuovo non funzionare. Qusto comando (sclang.sh) viene eseguito allo start
+dal servizio /etc/systemd/system/norns-sclang.service.
+---> L'avvio di questo comando creera' la cartella /home/we/.local/share/SuperCollider/Extensions che ci serve per continuare
+con l'installazione!
+
 Uscire con Ctrl+D
 cd sc
 ./install.sh
