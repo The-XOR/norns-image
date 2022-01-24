@@ -12,14 +12,13 @@ login is "pi" with password "raspberry"
 3. Network > Wifi (set SSID/password)
 4. Interfacing > SSH (on)
 5. Interfacing > SPI on
-6. Localization > timezone, keyboard, 
+6. Localization > timezone, keyboard (US layout), 
 7. Exit, Reboot
 
 relogin (attenzione: ora la password è sleep)
-* sudo apt-get update
-* sudo apt-get upgrade
-* sudo reboot
-* sudo apt-get install vim git bc i2c-tools
+1. sudo apt-get update
+2. sudo apt-get upgrade
+3. sudo reboot
 
 * change user name: we
 
@@ -37,51 +36,16 @@ disable need for passwd with sudo:
 
 * Installare i prerequisiti:
 
-sudo apt-get install libevdev-dev liblo-dev libudev-dev libcairo2-dev liblua5.3-dev libavahi-compat-libdnssd-dev
-sudo apt-get install libasound2-dev libncurses5-dev libncursesw5-dev libsndfile1-dev
-
-sudo apt-get install network-manager
-
-sudo apt-get install luarocks liblua5.1-dev
-sudo luarocks install ldoc
-
-sudo apt-get install mc (non un prerequisito, ma come non averlo?)
-
-curl https://keybase.io/artfwo/pgp_keys.asc | sudo apt-key add -
-
 --- OCIO: LA PROSSIMA LINEA E' PER 'BUSTER', MA NEL CASO FOSSE AGGIORNATO RASPIOS AD UNA FUTURA VERSIONE AGGIORNARE DI CONSEGUENZA
 echo "deb https://package.monome.org/ buster main" | sudo tee /etc/apt/sources.list.d/norns.list
 
-sudo apt update
-sudo apt install --no-install-recommends jackd2 libjack-jackd2-dev
-sudo apt install --no-install-recommends libmonome-dev libnanomsg-dev supercollider-language supercollider-server supercollider-dev
-sudo apt install --no-install-recommends libboost-dev dnsmasq
-sudo apt install --no-install-recommends sc3-plugins
-sudo apt install --no-install-recommends ladspalist usbmount
+sudo ./install_prerequisites.sh
 
-
-sudo nano /boot/config.txt
-# Enable audio (loads snd_bcm2835)
-dtparam=audio=off  <-----------  impostare ad OFF l'audio interno del raspoberro
 reboot!!!!!
 
-A cus punt, la wifi **POTREBBE** non funzionare piu' a causa del network manager. La cura dovrebbe essere:
+Ripristinare wifi:
 
-I. Editare il file /etc/NetworkManager/NetworkManager.conf come segue:
-[main]
-plugins=ifupdown,keyfile
-dhcp=internal
-
-
-[ifupdown]
-managed=true
-
-II. sudo systemctl disable dhcpcd
-    sudo systemctl stop dhcpcd
-
-III. reboot
-
-IV. nmcli device wifi con "Nome rete wifi" password "password rete wifi"
+nmcli device wifi con "Nome rete wifi" password "password rete wifi"
 
 *****************************************
 
@@ -162,9 +126,9 @@ Selezionare la scheda audio che si intende utilizzare e settarla alla stecca del
 --- Installazione maiden:
 - scaricare ultima versione di maiden da https://github.com/monome/maiden/releases.
 va installato in ~/
-per es. wget https://github.com/monome/maiden/releases/download/v1.1.2/maiden-v1.1.2.tgz
-tar -xzvf maiden-v1.1.2.tgz
-rm maiden-v1.1.2.tgz
+per es. wget https://github.com/monome/maiden/releases/download/v1.1.5/maiden-v1.1.5.tgz
+tar -xzvf maiden-v1.1.5.tgz
+rm maiden-v1.1.5.tgz
 
 
 reboot, norns should boot up.
@@ -174,6 +138,9 @@ set up `usbmount` for SYNC/etc via menu:
    (1) the 'usbmount' package is installed
        apt-get install usbmount
 
-   (2) MountFlags has been tweaked in systemd-udevd.service
-       https://www.raspberrypi.org/forums/viewtopic.php?t=205016
-       (change MountFlags=slave to MountFlags=shared)
+   (2) MountFlags has been tweaked in systemd-udevd.service (da:        https://www.raspberrypi.org/forums/viewtopic.php?t=205016)
+
+   sudo nano /lib/systemd/system/systemd-udevd.service
+       change MountFlags=slave to MountFlags=shared
+
+    reboot

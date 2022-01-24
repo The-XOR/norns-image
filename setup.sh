@@ -40,8 +40,6 @@ sudo systemctl enable norns.target
 # motd
 sudo cp config/motd /etc/motd
 
-# profile
-sudo cp config/10-default-env-vars.sh /etc/profile.d/10-default-env-vars.sh
 
 # bashrc
 sudo cp config/bashrc /home/we/.bashrc
@@ -99,4 +97,3 @@ sudo apt --purge -y autoremove
 sudo systemctl daemon-reload
 
 tar -xzvf dust.tar.gz -C ~/ 
-mv --force ~/norns-image/we ~/dust
