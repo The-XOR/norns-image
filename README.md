@@ -130,6 +130,9 @@ per es. wget https://github.com/monome/maiden/releases/download/v1.1.5/maiden-v1
 tar -xzvf maiden-v1.1.5.tgz
 rm maiden-v1.1.5.tgz
 
+Per ultimo... dust!
+il file dust.tar (che viene scompattato automatricamente da setup.sh) e' stato generato scaricando l'immagine di norns
+(https://github.com/monome/norns-image/releases) e generando un file tar della directory dust.
 
 reboot, norns should boot up.
 

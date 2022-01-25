@@ -25,6 +25,7 @@ sudo apt purge hostapd -y
 # systemd
 sudo mkdir -p /etc/systemd/system.conf.d
 sudo cp --remove-destination config/10-default-env-vars.conf /etc/systemd/system.conf.d/10-default-env-vars.conf
+sudo cp --remove-destination config/10-default-env-vars.sh /etc/profile.d/10-default-env-vars.sh
 sudo cp --remove-destination config/norns-crone.service /etc/systemd/system/norns-crone.service
 sudo rm /etc/systemd/system/norns-supernova.service
 sudo cp --remove-destination config/norns-sclang.service /etc/systemd/system/norns-sclang.service
