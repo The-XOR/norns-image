@@ -120,9 +120,6 @@ ldoc .
 cd ~/norns-image
 ./setup.sh
 
-lanciare alsamixer
-Selezionare la scheda audio che si intende utilizzare e settarla alla stecca della manetta
-
 --- Installazione maiden:
 - scaricare ultima versione di maiden da https://github.com/monome/maiden/releases.
 va installato in ~/
