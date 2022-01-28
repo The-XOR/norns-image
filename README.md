@@ -58,6 +58,20 @@ card 1: CODEC [USB Audio CODEC], device 0: USB Audio [USB Audio]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
 
+quindi, aplay -L
+....
+ull
+    Discard all samples (playback) or generate zero samples (capture)
+default
+    Default Audio Device
+sysdefault
+    Default Audio Device
+hw:CARD=CODEC,DEV=0
+    USB Audio CODEC, USB Audio
+    Direct hardware device without any conversions
+plughw:CARD=CODEC,DEV=0
+
+
 annotarsi il n. di card della scheda che si vuole utilizzare
 
 git clone https://github.com/The-XOR/norns.git --depth=1
@@ -69,7 +83,7 @@ nano asound.conf
 inserire qui il numero di card annotato in precedenza (per default, 1)
 
 nano jackdrc
-cambiare il parametro -dhw:XXX  utilizzando il # di card desiderato (per default, 1)
+cambiare il parametro -dhw:CARD=...DEV=...  utilizzando il # di card desiderato (per default: CARD=CODEC,DEV=0)
 
 nano norns-jack.service
 riga ExecStart=... cambiare il parametro -dhw:XXX  utilizzando il # di card desiderato (per default, 1)
