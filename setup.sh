@@ -1,3 +1,5 @@
+# hold packages we don't want to update
+echo "raspberrypi-kernel hold" | sudo dpkg --set-selections
 
 # MODIFICARE QUESTO FILE e mettere il numero di scheda audio voluta
 sudo cp --remove-destination config/asound.conf /etc/asound.conf
@@ -22,13 +24,17 @@ sudo apt purge libraspberrypi-doc -y
 # uninstall old network packages
 sudo apt purge hostapd -y
 
+# install needed packages
+sudo apt install --no-install-recommends network-manager dnsmasq-base midisport-firmware samba
+
 # systemd
 sudo mkdir -p /etc/systemd/system.conf.d
 sudo cp --remove-destination config/rc.local /etc/rc.local
 sudo cp --remove-destination config/10-default-env-vars.conf /etc/systemd/system.conf.d/10-default-env-vars.conf
 sudo cp --remove-destination config/10-default-env-vars.sh /etc/profile.d/10-default-env-vars.sh
 sudo cp --remove-destination config/norns-crone.service /etc/systemd/system/norns-crone.service
-sudo rm /etc/systemd/system/norns-supernova.service
+#sudo rm /etc/systemd/system/norns-supernova.service
+#sudo cp --remove-destination config/norns-supernova.service /etc/systemd/system/norns-supernova.service
 sudo cp --remove-destination config/norns-sclang.service /etc/systemd/system/norns-sclang.service
 sudo cp --remove-destination config/norns-jack.service /etc/systemd/system/norns-jack.service
 sudo cp --remove-destination config/norns-maiden.service /etc/systemd/system/norns-maiden.service
@@ -45,6 +51,12 @@ sudo cp config/motd /etc/motd
 
 # bashrc
 sudo cp config/bashrc /home/we/.bashrc
+
+# samba
+(echo "sleep"; echo "sleep") | sudo smbpasswd -s -a we
+sudo cp config/smb.conf /etc/samba/
+sudo /etc/init.d/samba restart
+
 
 # Wifi
 # Use the upstream rtl8192cu driver instead of the problematic realtek 8192cu driver
@@ -95,6 +107,14 @@ sudo apt purge exim4-* nfs-common triggerhappy -y
 # governor
 sudo systemctl mask raspi-config.service
 
+# set alsa volume and store
+amixer --device hw:CODEC set Master 100% on
+sudo alsactl store
+
+# uninstall packages we don't need
+sudo apt purge libraspberrypi-doc modemmanager
+
+# cleanup
 sudo apt --purge -y autoremove
 sudo systemctl daemon-reload
 
