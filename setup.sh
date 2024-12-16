@@ -10,10 +10,9 @@ sudo dtc -W no-unit_address_vs_reg -@ -I dts -O dtb -o /boot/overlays/norns-butt
 # display
 sudo dtc -I dts -O dtb -o /boot/overlays/norns28.dtbo config/norns28.dts
 
-sudo mv /boot/cmdline.txt /boot/cmdline.old
-sudo mv /boot/config.txt /boot/config.old
 sudo cp --remove-destination config/cmdline.txt /boot/cmdline.txt
 sudo cp --remove-destination config/config.txt /boot/config.txt
+sudo touch /boot/ssh
 
 # monome package apt
 sudo cp config/norns.list /etc/apt/sources.list.d/
