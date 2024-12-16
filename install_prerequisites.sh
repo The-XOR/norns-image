@@ -10,11 +10,11 @@ apt-get install -y luarocks liblua5.1-dev
 luarocks install -y ldoc
 
 apt-get install -y mc
-apt-get install -y --no-install -y-recommends jackd2 libjack-jackd2-dev
-apt-get install -y --no-install -y-recommends libmonome-dev libnanomsg-dev supercollider-language supercollider-server supercollider-dev
-apt-get install -y --no-install -y-recommends libboost-dev dnsmasq
-apt-get install -y --no-install -y-recommends sc3-plugins
-apt-get install -y --no-install -y-recommends ladspalist usbmount
+apt-get install -y --no-install-recommends jackd2 libjack-jackd2-dev
+apt-get install -y --no-install-recommends libmonome-dev libnanomsg-dev supercollider-language supercollider-server supercollider-dev
+apt-get install -y --no-install-recommends libboost-dev dnsmasq
+apt-get install -y --no-install-recommends sc3-plugins
+apt-get install -y --no-install-recommends ladspalist 
 apt-get install -y usbmount
 apt-get install -y network-manager
 
