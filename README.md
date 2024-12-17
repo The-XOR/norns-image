@@ -158,3 +158,9 @@ set up `usbmount` for SYNC/etc via menu:
        change MountFlags=slave to MountFlags=shared
 
     reboot
+
+
+DEBUG
+Per riabilitare l'uscita HDMI, selezionare nel file cmdline.txt la linea "#DEBUG"
+La password per l'utente we e' "sleep"
+Per connettersi alla internet, utilizzare la LAN
