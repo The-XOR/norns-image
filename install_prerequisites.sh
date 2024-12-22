@@ -5,7 +5,7 @@ apt-get install -y vim git bc i2c-tools
 
 apt-get install -y libevdev-dev liblo-dev libudev-dev libcairo2-dev liblua5.3-dev libavahi-compat-libdnssd-dev
 apt-get install -y libasound2-dev libncurses5-dev libncursesw5-dev libsndfile1-dev
-apt-get install gpiod libgpiod-dev libgpiod-doc 
+apt-get install -y gpiod libgpiod-dev libgpiod-doc 
 
 apt-get install -y luarocks liblua5.1-dev
 luarocks install -y ldoc
