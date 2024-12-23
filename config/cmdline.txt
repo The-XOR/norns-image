@@ -1,8 +1,8 @@
 ### MAIN
-console=tty1 fbcon=map:1 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait spidev.bufsiz=8192
+console=tty1 fbcon=map:1 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 fsck.repair=yes quiet rootwait spidev.bufsiz=76800
 
 # debug:
-#console=serial0,115200 console=tty1 root=root=/dev/mmcblk0p2 rootfstype=ext4 rootwait spidev.bufsiz=8192
+#console=serial0,115200 console=tty1 root=root=/dev/mmcblk0p2 rootfstype=ext4 fsck.repair=yes quiet rootwait spidev.bufsiz=76800
 
 # raspberry pi 3:
-# console=tty1 fbcon=map:0 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait spidev.bufsiz=8192
+# console=tty1 fbcon=map:0 consoleblank=0 root=/dev/mmcblk0p2 rootfstype=ext4 fsck.repair=yes quiet rootwait spidev.bufsiz=76800

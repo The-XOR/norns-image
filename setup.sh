@@ -8,10 +8,14 @@ sudo cp --remove-destination config/asound.conf /etc/asound.conf
 sudo dtc -W no-unit_address_vs_reg -@ -I dts -O dtb -o /boot/overlays/norns-buttons-encoders.dtbo config/norns-buttons-encoders-overlay.dts
 
 # display
-sudo dtc -I dts -O dtb -o /boot/overlays/norns28.dtbo config/norns28.dts
+#sudo dtc -I dts -O dtb -o /boot/overlays/norns28.dtbo config/norns28.dts
 
 sudo cp --remove-destination config/cmdline.txt /boot/cmdline.txt
 sudo cp --remove-destination config/config.txt /boot/config.txt
+
+# Blacklist scheda audio interna del raspberry
+echo "blacklist snd_bcm2835" | sudo tee -a /etc/modprobe.d/alsa-blacklist.conf
+
 sudo touch /boot/ssh
 
 # monome package apt
