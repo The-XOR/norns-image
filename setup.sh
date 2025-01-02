@@ -122,5 +122,6 @@ sudo apt purge libraspberrypi-doc modemmanager
 # cleanup
 sudo apt --purge -y autoremove
 sudo systemctl daemon-reload
+cp /home/we/norns/update/version.txt /home/we/
 
 tar -xzvf dust.tar.gz -C ~/ 
