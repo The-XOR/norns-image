@@ -2,7 +2,9 @@
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
 
+#evita warning low voltage detected
 avoid_warnings=2
+
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
 
@@ -19,10 +21,9 @@ arm_freq=1200
 dtparam=i2c_arm=on
 #dtparam=i2s=on
 dtparam=spi=on
-#dtoverlay=adafruit18,reset_pin=6,dc_pin=5,rotate=270
-#dtoverlay=norns28,reset_pin=6,dc_pin=5,rotate=270
-#dtparam=rotate=270
 
+# led di accensione
+dtoverlay=gpio-hog,gpio=21
 
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=off
