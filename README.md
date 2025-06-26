@@ -192,6 +192,10 @@ set up `usbmount` for SYNC/etc via menu:
 
     reboot
 
+# AUDIO USB:
+# MODIFICARE QUESTO FILE e mettere il numero di scheda audio voluta
+aplay -l | grep "USB Audio"|awk  '{print "default.pcm.card " substr($2,1,1) "\ndefault.ctl.card " substr($2,1,1)}' | sudo tee /etc/asound.conf
+
 
 DEBUG
 Per riabilitare l'uscita HDMI, selezionare nel file cmdline.txt la linea "#DEBUG"
