@@ -42,8 +42,12 @@ sudo cp --remove-destination config/norns-maiden.service /etc/systemd/system/nor
 sudo cp --remove-destination config/norns-maiden.socket /etc/systemd/system/norns-maiden.socket
 sudo cp --remove-destination config/norns-matron.service /etc/systemd/system/norns-matron.service
 sudo cp --remove-destination config/norns-watcher.service /etc/systemd/system/norns-watcher.service
+sudo cp --remove-destination config/ttymidi.service /etc/systemd/system/ttymidi.service
+sudo cp --remove-destination config/midiconnect.service /etc/systemd/system/midiconnect.service
 sudo cp --remove-destination config/norns.target /etc/systemd/system/norns.target
 sudo cp --remove-destination config/55-maiden-systemctl.pkla /etc/polkit-1/localauthority/50-local.d/55-maiden-systemctl.pkla
+sudo systemctl enable ttymidi.service
+sudo systemctl enable nmidiconnect.service
 sudo systemctl enable norns.target
 
 # motd
@@ -124,3 +128,4 @@ sudo apt --purge -y autoremove
 sudo systemctl daemon-reload
 
 tar -xzvf dust.tar.gz -C ~/ 
+cp -R dust/* /home/we/dust/

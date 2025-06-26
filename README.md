@@ -141,6 +141,39 @@ per es. wget https://github.com/monome/maiden/releases/download/v1.1.5/maiden-v1
 tar -xzvf maiden-v1.1.5.tgz
 rm maiden-v1.1.5.tgz
 
+
+
+--- Installazione ttymidi:
+cd
+sudo apt-get install libasound2-dev
+wget http://www.varal.org/ttymidi/ttymidi.tar.gz
+tar -zxvf ttymidi.tar.gz
+cd ttymidi
+Editare Makefile ed aggiungere
+    -lpthread 
+in "all:"
+    gcc src/ttymidi.c -o ttymidi -lasound -lpthread
+quindi
+make
+sudo make install
+
+A questo punto dobbiamo creare le porte midi raw, quelle effettivamente usate da norns (ttymidi crea delle porte "sequencer").
+Per procedere:
+sudo modprobe snd-virmidi
+amidi -l
+Dovremmo vedere, se tutto funziona, un elenco di porte Raw, tipo:
+Dir Device    Name
+IO  hw:0,0    Virtual Raw MIDI (16 subdevices)
+IO  hw:0,1    Virtual Raw MIDI (16 subdevices)
+IO  hw:0,2    Virtual Raw MIDI (16 subdevices)
+IO  hw:0,3    Virtual Raw MIDI (16 subdevices)
+
+Se cosi' e', rendiamo PERMANENTE il comando con:
+echo "snd-virmidi" | sudo tee -a /etc/modules
+
+Ci penseranno poi i servizi topici ttymidi e midiconnect (appositamente creati dal sempervoster) a connettere
+la porta midi sequencer con quella virtuale, utilizzabile da norns.
+
 Per ultimo... dust!
 il file dust.tar (che viene scompattato automatricamente da setup.sh) e' stato generato scaricando l'immagine di norns
 (https://github.com/monome/norns-image/releases) e generando un file tar della directory dust.

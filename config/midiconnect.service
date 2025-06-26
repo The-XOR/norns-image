@@ -1,0 +1,10 @@
+[Unit] 
+Description=ttymidi
+DefaultDependencies=no
+After=ttymidi.service
+
+[Service]
+ExecStart=/home/we/norns/midi.sh
+
+[Install]
+WantedBy=sysinit.target

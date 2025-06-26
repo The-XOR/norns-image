@@ -1,0 +1,10 @@
+[Unit] 
+Description=ttymidi
+DefaultDependencies=no
+After=local-fs.target
+
+[Service]
+ExecStart=/usr/local/bin/ttymidi -s /dev/ttyAMA0 -b 38400 -n "laMIDI" &
+
+[Install]
+WantedBy=sysinit.target
